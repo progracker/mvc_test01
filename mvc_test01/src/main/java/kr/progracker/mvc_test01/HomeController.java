@@ -2,7 +2,11 @@ package kr.progracker.mvc_test01;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.progracker.mvc_test01.dao.UserDaoImpl;
 
 /**
  * Handles requests for the application home page.
@@ -34,6 +41,26 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@Resource(name="userDaoImpl")
+	private UserDaoImpl userDaoImpl;
+	
+	@RequestMapping("/join.pro")
+	public ModelAndView main() {
+		ModelAndView mav = new ModelAndView("main");
+		mav.setViewName("user/joinForm");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", "test");
+		map.put("password", "1234");
+		
+		if(userDaoImpl.getLoginResult(map) == 1) {
+			System.out.println("로그인 성공");
+		} else {
+			System.out.println("로그인 실패");
+		}
+		
+		return mav;
 	}
 	
 }

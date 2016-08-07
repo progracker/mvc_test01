@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userDao">
+	<select id="getLoginResult" parameterType="java.util.Map" resultType="Integer">
+		SELECT
+			COUNT(U_ID)
+		FROM login_user
+		WHERE U_ID = #{id}
+		AND U_PASSWORD = #{password}
+	</select>
+</mapper>
